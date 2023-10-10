@@ -24,7 +24,7 @@
       type="text/javascript"
       src="https://unpkg.com/alea@1.0.0/alea.js"
     ></script>
-    <script type="text/javascript" src="../exampleUtil.js"></script>
+    <!-- <script type="text/javascript" src="../exampleUtil.js"></script> -->
     <script type="text/javascript" src="floor_quotient.js"></script>
 
     <script type="text/javascript">
@@ -49,6 +49,7 @@
         // create a network
         var container = document.getElementById("mynetwork");
         var directionInput = document.getElementById("direction").value;
+        var enablePhysics = (document.getElementById("physics").value == "on");
         var options = {
           layout: {
             hierarchical: {
@@ -62,7 +63,7 @@
             hover: true
           },
           nodes: {
-            physics: true
+            physics: enablePhysics,
           }
         };
         // var options = {
@@ -74,11 +75,11 @@
         network = new vis.Network(container, data, options);
 
         // add event listeners
-        network.on("select", function (params) {
-          document.getElementById("selection").innerText =
-            "Selection: " + params.nodes + ", edges " + params.edges;
-          // console.log(params);
-        });
+        // network.on("select", function (params) {
+        //   document.getElementById("selection").innerText =
+        //     "Selection: " + params.nodes + ", edges " + params.edges;
+        //   // console.log(params);
+        // });
       }
     </script>
   </head>
@@ -103,15 +104,22 @@
         <label for="aParam">Parameter `a`:</label>
         <input id="aParam" type="text" value="1" style="width: 50px" />
         <input type="submit" value="Go" />
-      </form>
-      <p>
-      <input type="button" id="btn-UD" value="Up-Down" />
-      <input type="button" id="btn-DU" value="Down-Up" />
-      <input type="button" id="btn-LR" value="Left-Right" />
-      <input type="button" id="btn-RL" value="Right-Left" />
+    </form>
+    <br />
+
+    <p id="selection"></p>
+    <div id="mynetwork"></div>
+
+    <p>
+      Partial order direction:
+      <input type="button" id="btn-UD" value="Down-Up" />
+      <input type="button" id="btn-DU" value="Up-Down" />
+      <!-- 
+        <input type="button" id="btn-LR" value="Left-Right" />
+        <input type="button" id="btn-RL" value="Right-Left" /> 
+      -->
       <input type="hidden" id="direction" value="UD" />
     </p>
-
     <script language="javascript">
       var directionInput = document.getElementById("direction");
       var btnUD = document.getElementById("btn-UD");
@@ -124,21 +132,51 @@
         directionInput.value = "DU";
         draw();
       };
-      var btnLR = document.getElementById("btn-LR");
-      btnLR.onclick = function () {
-        directionInput.value = "LR";
-        draw();
-      };
-      var btnRL = document.getElementById("btn-RL");
-      btnRL.onclick = function () {
-        directionInput.value = "RL";
-        draw();
-      };
+      // var btnLR = document.getElementById("btn-LR");
+      // btnLR.onclick = function () {
+      //   directionInput.value = "LR";
+      //   draw();
+      // };
+      // var btnRL = document.getElementById("btn-RL");
+      // btnRL.onclick = function () {
+      //   directionInput.value = "RL";
+      //   draw();
+      // };
     </script>
-    <br />
+    <p>
+      Enable physics?
+      <input type="checkbox" id="physics-check" checked />
+      <input type="hidden" id="physics" value="on" />
+    </p>
+    <script>
+      // toggle physics button control
+      var enablePhysics = document.getElementById("physics");
+      var checkPhysics = document.getElementById("physics-check");
+      checkPhysics.onclick = function() {
+        if (enablePhysics.value == "on") {
+          enablePhysics.value = "off";
+          options = {physics: false}
+          // options = {
+          //   nodes: {
+          //     physics: false,
+          //   }
+          // }
+          console.log("set physics to off")
+        } else {
+          enablePhysics.value = "on";
+          options = {physics: true}
+          // options = {
+          //   nodes: {
+          //     physics: true,
+          //   }
+          // }
+          console.log("set physics to on")
+        }
+        network.setOptions(options);
+        // network.redraw();
+      }
+    </script>
 
-    <div id="mynetwork"></div>
 
-    <p id="selection"></p>
   </body>
 </html>
