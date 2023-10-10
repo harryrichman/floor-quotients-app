@@ -62,9 +62,7 @@
           interaction: {
             hover: true
           },
-          nodes: {
-            physics: enablePhysics,
-          }
+          physics: enablePhysics,
         };
         // var options = {
         //     physics: {
@@ -161,7 +159,7 @@
           //     physics: false,
           //   }
           // }
-          console.log("set physics to off")
+          console.log("set physics to off");
         } else {
           enablePhysics.value = "on";
           options = {physics: true}
@@ -170,9 +168,10 @@
           //     physics: true,
           //   }
           // }
-          console.log("set physics to on")
+          console.log("set physics to on");
         }
         network.setOptions(options);
+        console.log(network);
         // network.redraw();
       }
     </script>
