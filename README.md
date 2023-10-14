@@ -1,6 +1,8 @@
 # floor-quotients-app
 Explore the floor quotient partial order
 
+### External libraries
+
 Made using [vis.js](https://visjs.org/).
 
 ### Reference
