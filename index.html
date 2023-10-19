@@ -41,7 +41,7 @@
 
       function draw() {
         destroy();
-        // randomly create some nodes and edges
+        // create Hasse diagram nodes and edges
         var nodeCount = document.getElementById("nodeCount").value;
         var aParam = document.getElementById("aParam").value;
         var data = getFloorQuotientHasseGraph(nodeCount, aParam);
@@ -56,7 +56,7 @@
               direction: directionInput,
               sortMethod: 'directed',
               shakeTowards: 'leaves',
-              levelSeparation: 50,
+              levelSeparation: 80,
             },
           },
           interaction: {
