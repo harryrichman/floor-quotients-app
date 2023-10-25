@@ -3,13 +3,14 @@
   <head>
     <title>Vis Network | Floor quotients</title>
 
+    <link rel="stylesheet" href="https://harryrichman.github.io/main.css"/>
     <style type="text/css">
       body {
-        font: 10pt sans;
+        font: 10pt;
       }
 
       #mynetwork {
-        width: 1200px;
+        width: 100%;
         height: 600px;
         border: 1px solid lightgray;
       }
@@ -24,7 +25,6 @@
       type="text/javascript"
       src="https://unpkg.com/alea@1.0.0/alea.js"
     ></script>
-    <!-- <script type="text/javascript" src="../exampleUtil.js"></script> -->
     <script type="text/javascript" src="floor_quotient.js"></script>
 
     <script type="text/javascript">
@@ -42,15 +42,21 @@
       function draw() {
         destroy();
         // create Hasse diagram nodes and edges
-        var nodeCount = document.getElementById("nodeCount").value;
-        var aParam = document.getElementById("aParam").value;
-        var data = getFloorQuotientHasseGraph(nodeCount, aParam);
+        const nodeCount = document.getElementById("nodeCount").value;
+        const aParam = document.getElementById("aParam").value;
+        const data = getFloorQuotientHasseGraph(nodeCount, aParam);
 
         // create a network
-        var container = document.getElementById("mynetwork");
-        var directionInput = document.getElementById("direction").value;
-        var enablePhysics = (document.getElementById("physics").value == "on");
-        var options = {
+        const container = document.getElementById("mynetwork");
+        const directionInput = document.getElementById("direction").value;
+        const enablePhysics = (document.getElementById("physics").value == "on");
+        const options = {
+          nodes: {
+            color: {
+              border: '#888888',
+              background: '#EEEEEE',
+            },
+          },
           layout: {
             hierarchical: {
               direction: directionInput,
@@ -64,12 +70,6 @@
           },
           physics: enablePhysics,
         };
-        // var options = {
-        //     physics: {
-        //         enabled: true,
-        //         wind: { x: 0, y: 1}
-        //     }
-        // };
         network = new vis.Network(container, data, options);
 
         // add event listeners
@@ -112,10 +112,6 @@
       Partial order direction:
       <input type="button" id="btn-UD" value="Down-Up" />
       <input type="button" id="btn-DU" value="Up-Down" />
-      <!-- 
-        <input type="button" id="btn-LR" value="Left-Right" />
-        <input type="button" id="btn-RL" value="Right-Left" /> 
-      -->
       <input type="hidden" id="direction" value="UD" />
     </p>
     <script language="javascript">
@@ -130,16 +126,6 @@
         directionInput.value = "DU";
         draw();
       };
-      // var btnLR = document.getElementById("btn-LR");
-      // btnLR.onclick = function () {
-      //   directionInput.value = "LR";
-      //   draw();
-      // };
-      // var btnRL = document.getElementById("btn-RL");
-      // btnRL.onclick = function () {
-      //   directionInput.value = "RL";
-      //   draw();
-      // };
     </script>
     <p>
       Enable physics?
